@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 
 export default function App() {
   return (
@@ -13,28 +12,28 @@ export default function App() {
       </View>
 
       <ScrollView horizontal>
-        <View >
+        <View>
           <Image
             style={styles.film}
             source={require("./assets/theavengers.jpg")}
           />
         </View>
-        <View >
+        <View>
           <Image
             style={styles.film}
             source={require("./assets/ageofultron_.jpg")}
           />
         </View>
-        <View >
+        <View>
           <Image
             style={styles.film}
             source={require("./assets/infinitywar.jpg")}
           />
         </View>
-        <View >
+        <View>
           <Image style={styles.film} source={require("./assets/endgame.jpg")} />
         </View>
-        <View >
+        <View>
           <Image
             style={styles.film}
             source={require("./assets/secretwar.jpg")}
@@ -62,7 +61,7 @@ export default function App() {
             source={require("./assets/thor.jpg")}
           />
         </View>
-        
+
         <View style={styles.listadoItem}>
           <Image
             style={styles.character}
