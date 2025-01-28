@@ -1,4 +1,4 @@
-import { ScrollView, View, Image, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 
 
 export default function App() {
@@ -13,28 +13,28 @@ export default function App() {
       </View>
 
       <ScrollView horizontal>
-        <View>
+        <View >
           <Image
             style={styles.film}
             source={require("./assets/theavengers.jpg")}
           />
         </View>
-        <View>
+        <View >
           <Image
             style={styles.film}
             source={require("./assets/ageofultron_.jpg")}
           />
         </View>
-        <View>
+        <View >
           <Image
             style={styles.film}
             source={require("./assets/infinitywar.jpg")}
           />
         </View>
-        <View>
+        <View >
           <Image style={styles.film} source={require("./assets/endgame.jpg")} />
         </View>
-        <View>
+        <View >
           <Image
             style={styles.film}
             source={require("./assets/secretwar.jpg")}
@@ -42,7 +42,7 @@ export default function App() {
         </View>
       </ScrollView>
 
-      <Text style={styles.titulo}>Avengers Originales</Text>
+      <Text style={styles.titulo}>Vengadores Originales</Text>
       <View style={styles.listado}>
         <View style={styles.listadoItem}>
           <Image
@@ -62,7 +62,7 @@ export default function App() {
             source={require("./assets/thor.jpg")}
           />
         </View>
-
+        
         <View style={styles.listadoItem}>
           <Image
             style={styles.character}
@@ -84,7 +84,7 @@ export default function App() {
           />
         </View>
       </View>
-      <Text style={styles.titulo}> Peliculas </Text>
+      <Text style={styles.titulo}>Peliculas</Text>
       <View style={styles.listado}>
         <View style={styles.listadoItem}>
           <Image
@@ -121,18 +121,21 @@ const styles = StyleSheet.create({
     height: 250,
   },
   container: {
-    marginHorizontal: 10,
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
   },
   titulo: {
-    fontWeight: "bold",
     fontSize: 24,
+    fontWeight: "bold",
     marginRight: 10,
     textAlign: "center",
   },
   film: {
-    width: 250,
-    height: 300,
-    marginRight: 10,
+    width: "100%",
+    height: 200,
+    marginVertical: 5,
   },
   character: {
     width: "100%",
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
   listado: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "sapce-between",
   },
   listadoItem: {
     flexBasis: "48%",
