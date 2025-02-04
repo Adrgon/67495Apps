@@ -1,6 +1,9 @@
 import {useState} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import {Button, Text, View, TextInput, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import {SafeAreaView, Text, View, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import ProductInput from './src/components/ProductInput/ProductInput';
+import CustomModal from './src/components/CustomModal/CustomModal';
+import { colors1, colors2 } from './src/constanst/color';
 
 const productsExample = [
   { id: 1, value: "Tomate" },
@@ -22,6 +25,13 @@ export default function App() {
 
   const addItem = () => {
     setItemList( currentValue => [...currentValue, {id: Math.random().toString(), value: textItem}])
+/*     
+    console.log(textItem);
+    console.table(itemList);
+    console.dir({id: 1, value: "Tomate"})
+    console.warn("Esto es una advertencia")
+    console.error("Esto es un error") 
+    */
     setTextItem("")
   }
 
@@ -37,7 +47,8 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+{/*       
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -46,7 +57,13 @@ export default function App() {
           placeholder="Limpiar la casa"
         />
         <Button title="Agregar" color="#5555ff" onPress={addItem} />
-      </View>
+      </View> 
+      */}
+      <ProductInput 
+        addItem={addItem}
+        handleChangeText={handleChangeText}
+        textItem={textItem}
+      />
       <View style={styles.productsContainer}>
         <FlatList
           style={styles.flatlist}
@@ -62,7 +79,7 @@ export default function App() {
           )}
         />
       </View>
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+{/*       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalStyles}>
           <View style={styles.modalContainer}>
             <Text style={styles.textModal}>
@@ -82,10 +99,16 @@ export default function App() {
             />
           </View>
         </View>
-      </Modal>
+      </Modal> */}
+      <CustomModal 
+        handleCancelModal={handleCancelModal}
+        handleDelete={handleDelete}
+        itemSelected={itemSelected}
+        modalVisible={modalVisible}
+      />
 
-      <StatusBar style='dark' />
-    </View>
+      <StatusBar style='inverted' />
+    </SafeAreaView>
   );
 }
 
@@ -93,10 +116,10 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
     alignItems: "center",
-    backgroundColor: "#401F71",
+    backgroundColor: colors2.ligthGreen,
     flex: 1,
   },
-  inputContainer: {
+ /*  inputContainer: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
@@ -111,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 35,
     paddingHorizontal: 5,
-  },
+  }, */
 
   productsContainer: {
     marginTop: 15,
@@ -122,7 +145,7 @@ const styles = StyleSheet.create({
   product: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#BE7B72",
+    backgroundColor: colors2.green1,
     width: "100%",
     paddingVertical: 15,
     marginVertical: 10,
@@ -136,7 +159,7 @@ const styles = StyleSheet.create({
   flatlist: {
     width: "90%",
   },
-  modalStyles: {
+  /* modalStyles: {
     backgroundColor: "#401F71",
     flex: 1,
     alignItems: "center",
@@ -158,5 +181,5 @@ const styles = StyleSheet.create({
   },
   textModal: {
     fontWeight: "bold",
-  },
+  }, */
 });
