@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, Image } from 'react-native'
 import React from 'react'
 import Card from './Card'
 import { colors } from '../global/color';
@@ -7,11 +7,11 @@ const ProductItem = ({product}) => {
   return (
     <Card style={styles.additinalStyleCard}>
       <Text style={styles.textCategory}>{product.title}</Text>
-      <Image
+      {/* <Image
         resizeMode="cover"
         style={styles.image}
         source={{ uri: product.images[0] }}
-      />
+      /> */}
     </Card>
   );
 }
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   textCategory: {
-    color: colors.primary,
+    color: colors.secondary,
   },
 });

@@ -2,11 +2,12 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "../constants/colors";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { colors } from "../global/color";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const Search = ({ onSearch = () => {}, error = "", goBack = () => {} }) => {
   const [keyword, setKeyword] = useState("");
+  //console.log(keyword)
   console.log(error);
   return (
     <View style={styles.container}>
@@ -17,7 +18,7 @@ const Search = ({ onSearch = () => {}, error = "", goBack = () => {} }) => {
         onChangeText={setKeyword}
       />
       <Pressable onPress={() => onSearch(keyword)}>
-        <FontAwesome6 name="searchengin" size={24} color="white" />
+        <FontAwesome name="search" size={24} color="white" />
       </Pressable>
       <Pressable onPress={() => setKeyword("")}>
         <FontAwesome5 name="eraser" size={24} color="white" />
