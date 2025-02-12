@@ -4,42 +4,66 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+
+
 import allProducts from "../data/products.json";
 
 const Detail = ({ idSelected, setProductSelected }) => {
   //console.log(idSelected);
 
   const [product, setProduct] = useState(null);
+  const [orientation, setHorientation] = useState('portrait');
+  const { width, height } = useWindowDimensions();
+
+  // Landscape = horizontal
+  // Portrait = vertical
+
 
   useEffect(() => {
+    if(width > height) setHorientation("landscape")
+    else setHorientation("portrait")
+    
+  }, [width, height]);
+
+  //console.log(orientation);
+
+  useEffect(()=>{
     //Encontrar el producto por su id
     const productSelected = allProducts.find(
       (product) => product.id === idSelected
     );
     setProduct(productSelected);
-  }, [idSelected]);
+  }, [idSelected])
 
-  //console.log(product);
+  //console.log(product.images[0]);
 
   return (
     <View>
       <Button onPress={() => setProductSelected("")} title="Go back" />
       {product ? (
-        <View>
+        <View
+          style={
+            orientation === "portrait"
+              ? styles.mainContainer
+              : styles.mainContainerLandscape
+          }
+        >
           <Image
             source={{ uri: product.images[0] }}
             resizeMode="cover"
+            style={orientation === 'portrait' ? styles.image : styles.imageLandscape}
           />
-          <View> 
+          <View style={orientation === 'portrait' ? styles.textContainer : styles.textContainerLandscape}> 
             <Text>{product.title}</Text>
             <Text>{product.description}</Text>
             <Text style={styles.price}>${product.price}</Text>
-            <Button title="Add cart"></Button>
+            {/* <Button title="Add cart"></Button> */}
           </View>
         </View>
-      ) : null}
+      ) : null} 
     </View>
   );
 };
