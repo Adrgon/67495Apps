@@ -3,10 +3,10 @@ import React from 'react'
 import Card from './Card'
 import { colors } from '../global/color'
 
-const CategoryItem = ({ category, selectedCategory = () => {} }) => {
+const CategoryItem = ({ category, navigation}) => {
   return (
-    <Card>
-      <Pressable onPress={() => selectedCategory(category)}>
+    <Card style={{ marginVertical: 10, marginHorizontal: 10 }}>
+      <Pressable onPress={() => navigation.navigate('ItemListCategory', {category})}>
         <Text style={styles.text}>{category}</Text>
       </Pressable>
     </Card>

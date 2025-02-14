@@ -9,6 +9,8 @@ import ItemListCategory from './src/screens/ItemListCategory';
 import Detail from './src/screens/Detail';
 import { colors } from './src/global/color';
 
+import Navigator from './src/navigation/Navigator';
+
 export default function App() {
   const [categorySelected, setCategorySelected] = useState("");
   const [itemIdSelected, setItemIdSelected] = useState("");
@@ -27,24 +29,7 @@ export default function App() {
 
   if(fontsLoaded && !fontError) {
     return (
-      <SafeAreaView style={styles.container}>
-        <Header title="Categories" />
-        {!categorySelected ? (
-          <Home setCategorySelected={setCategorySelected} />
-        ) : !itemIdSelected ? (
-          <ItemListCategory
-            categorySelected={categorySelected}
-            setCategorySelected={setCategorySelected}
-            setItemIdSelected={setItemIdSelected}
-          />
-        ) : (
-          <Detail 
-            idSelected={itemIdSelected} 
-            setProductSelected={setItemIdSelected}
-          />
-        )}
-        {/* <StatusBar style="dark" /> */}
-      </SafeAreaView>
+      <Navigator />
     );
   }
 }
