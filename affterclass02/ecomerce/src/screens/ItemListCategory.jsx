@@ -6,15 +6,16 @@ import ProductItem from '../components/ProductItem'
 import Search from '../components/Search'
 
 const ItemListCategory = ({
-  categorySelected = "",
-  setCategorySelected = () => {},
-  setItemIdSelected = () => {},
+  route,
+  navigation
 }) => {
   const [keyWord, setKeyword] = useState("");
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [error, setError] = useState("");
 
-
+  const {category: categorySelected} = route.params;
+  //console.log(category)
+  console.log(categorySelected)
 
   useEffect(() => {
     regex = /\d/;
@@ -24,6 +25,7 @@ const ItemListCategory = ({
       setError("No se permiten números en la búsqueda");
       return;
     }
+
     const productsPrefiltered = products.filter(
       (product) => product.category === categorySelected
     );
@@ -39,13 +41,13 @@ const ItemListCategory = ({
       <Search
         error={error}
         onSearch={setKeyword}
-        goBack={() => setCategorySelected("")}
+        goBack={() => navigation.goBack()}
       />
       <FlatList
         data={productsFiltered}
         renderItem={({ item }) => <ProductItem 
           product={item} 
-          setItemIdSelected={setItemIdSelected}
+          navigation={navigation}
           />}
         keyExtractor={(producto) => producto.id}
       />

@@ -5,14 +5,14 @@ import { colors } from '../global/color';
 
 const ProductItem = ({
   product,
-  setItemIdSelected = () => {},
+  navigation
 }) => {
 
   return (
     <Card style={styles.additionalStylesCard}>
       <Pressable
         style={styles.pressable}
-        onPress={() => setItemIdSelected(product.id)}
+        onPress={() => navigation.navigate('Detail', {productId: product.id})}
       >
         <Text style={styles.textCategory}>{product.title}</Text>
         <Image

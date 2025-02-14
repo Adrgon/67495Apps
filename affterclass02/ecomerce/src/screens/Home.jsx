@@ -4,7 +4,7 @@ import categories from '../data/categories.json'
 import { colors } from '../global/color'
 import CategoryItem from '../components/CategoryItem'
 
-const Home = ({route, navigation}) => {
+const Home = ({navigation}) => {
   return (
     <View style={styles.flatListContainer}>
       <FlatList

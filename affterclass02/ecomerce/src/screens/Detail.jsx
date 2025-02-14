@@ -11,14 +11,14 @@ import React, { useEffect, useState } from "react";
 
 import allProducts from "../data/products.json";
 
-const Detail = ({ idSelected, setProductSelected }) => {
+const Detail = ({route, navigation}) => {
 
   const [product, setProduct] = useState(null);
   const [orientation, setHorientation] = useState('portrait');
   const { width, height } = useWindowDimensions();
 
-  // Landscape = horizontal
-  // Portrait = vertical
+  const {productId: idSelected} = route.params
+
 
 
   useEffect(() => {
@@ -27,21 +27,18 @@ const Detail = ({ idSelected, setProductSelected }) => {
     
   }, [width, height]);
 
-  //console.log(orientation);
+
 
   useEffect(()=>{
-    //Encontrar el producto por su id
     const productSelected = allProducts.find(
       (product) => product.id === idSelected
     );
     setProduct(productSelected);
   }, [idSelected])
 
-  //console.log(product.images[0]);
-
   return (
     <View>
-      <Button onPress={() => setProductSelected("")} title="Go back" />
+      <Button onPress={() => navigation.goBack()} title="Go back" />
       {product ? (
         <View
           style={
@@ -59,7 +56,6 @@ const Detail = ({ idSelected, setProductSelected }) => {
             <Text>{product.title}</Text>
             <Text>{product.description}</Text>
             <Text style={styles.price}>${product.price}</Text>
-            {/* <Button title="Add cart"></Button> */}
           </View>
         </View>
       ) : null} 
