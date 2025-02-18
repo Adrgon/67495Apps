@@ -1,0 +1,5 @@
+https://github.com/Adrgon/67495Apps/tree/main/clase07/ecomerce
+https://dummyjson.com/docs/products
+https://docs.expo.dev/guides/icons/
+https://icons.expo.fyi/Index/FontAwesome/search
+https://regexr.com/
