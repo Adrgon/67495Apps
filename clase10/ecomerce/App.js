@@ -14,7 +14,7 @@ export default function App() {
 
   if(fontsLoaded && !fontError) {
     return (
-        <Navigator />
+      <Navigator />
     );
   }
 }

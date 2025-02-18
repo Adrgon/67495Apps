@@ -30,7 +30,7 @@ const Cart = () => {
         <Pressable>
           <Text>Confirm</Text>
         </Pressable>
-        <Text>Total: ${total}</Text>
+        <Text>Total: ${total2}</Text>
       </View>
     </View>
   );

@@ -4,7 +4,7 @@ import React from "react";
 const OrdersTemp = () => {
   return (
     <View>
-      <Text>OrdersTemp</Text>
+      <Text>Aca van las ordenes de compra</Text>
     </View>
   );
 };

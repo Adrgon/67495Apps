@@ -17,20 +17,67 @@ import Header from '../components/Header'
 
 const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({route})=>({
+        tabBar: ()=> {
+          return <Header route={route} />
+        }, 
+        tabBarShowLabel: false,
+        tabBarStyle: styles.tabBar,
+      })}
+    >
       <Tab.Screen
         name="Shop"
         component={HomeStackNavigator}
-      />
-      
-      <Tab.Screen
-        name="Cart"
-        component={CartTemp}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <FontAwesome5
+                  name="store"
+                  size={24}
+                  color={focused ? "black" : colors.tertiary}
+                />
+              </View>
+            );
+          },
+        }}
       />
 
       <Tab.Screen
-        name="Orders"
-        component={OrderTemp}
+        name="Cart"
+        component={CartStackNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <FontAwesome6
+                  name="cart-shopping"
+                  size={24}
+                  color={focused ? "black" : colors.tertiary}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+
+      <Tab.Screen 
+      name="Orders" 
+      component={OrderStackNavigator} 
+              options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <View>
+                <FontAwesome5
+                  name="receipt"
+                  size={24}
+                  color={focused ? "black" : colors.tertiary}
+                />
+              </View>
+            );
+          }
+        }}  
       />
     </Tab.Navigator>
   );

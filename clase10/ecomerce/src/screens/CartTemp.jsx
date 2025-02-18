@@ -4,7 +4,7 @@ import React from "react";
 const CartTemp = () => {
   return (
     <View>
-      <Text>CartTemp</Text>
+      <Text>Este es el carrito de compras</Text>
     </View>
   );
 };
