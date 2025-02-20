@@ -1,6 +1,9 @@
 import {useFonts} from 'expo-font'
 import Navigator from './src/navigation/Navigator';
 import { SafeAreaView, View } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './src/store'
+
 
 export default function App() {
 
@@ -14,7 +17,9 @@ export default function App() {
 
   if(fontsLoaded && !fontError) {
     return (
-      <Navigator />
+      <Provider store={store}>
+        <Navigator />
+      </Provider>
     );
   }
 }

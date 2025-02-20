@@ -3,10 +3,12 @@ import React from 'react'
 import categories from '../data/categories.json'
 import { colors } from '../global/color'
 import CategoryItem from '../components/CategoryItem'
+import Counter from '../components/Counter'
 
 const Home = ({navigation}) => {
   return (
     <View style={styles.flatListContainer}>
+      <Counter />
       <FlatList
         showsVerticalScrollIndicator={false} 
         keyExtractor={element => element}
