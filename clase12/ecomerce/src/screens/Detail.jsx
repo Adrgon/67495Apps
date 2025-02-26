@@ -9,17 +9,20 @@ import {
 import React, { useEffect, useState } from "react";
 
 
-import allProducts from "../data/products.json";
+//import allProducts from "../data/products.json";
+import { useGetProductByIdQuery } from "../services/shopService";
 
 const Detail = ({route, navigation}) => {
 
 
-  const [product, setProduct] = useState(null);
+  //const [product, setProduct] = useState(null);
   const [orientation, setHorientation] = useState('portrait');
   const { width, height } = useWindowDimensions();
 
   const {productId: idSelected} = route.params
-
+  console.log(idSelected)
+  const {data: product, error, isloading} = useGetProductByIdQuery(idSelected)
+console.log(product)
 
   useEffect(() => {
     if(width > height) setHorientation("landscape")
@@ -29,16 +32,14 @@ const Detail = ({route, navigation}) => {
 
 
 
-   useEffect(()=>{
+/*    useEffect(()=>{
     const productSelected = allProducts.find(
       (product) => product.id === idSelected
     );
     setProduct(productSelected);
-  }, [idSelected]) 
+  }, [idSelected])  */
 
-  const handleAddCart = () => {
-    dispatch(addCartItem({ ...product, quantity: 1 }));
-  };
+
 
   return (
     <View>

@@ -2,10 +2,10 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import { colors } from '../global/color'
-import products from '../data/products.json'
+//import products from '../data/products.json'
 import ProductItem from '../components/ProductItem'
 import Search from '../components/Search'
-
+import { useGetProductsByCategoryQuery } from '../services/shopService'
 
 
 const ItemListCategory = ({
@@ -18,7 +18,8 @@ const ItemListCategory = ({
 
   const { category: categorySelected } = route.params;
 
-
+  const {data: productsFetched, error: ErrorFormFetched, isLoading} = useGetProductsByCategoryQuery(categorySelected)
+  //console.log(productsFetched);
 
    useEffect(() => {
     // Products filtered by category
@@ -30,17 +31,19 @@ const ItemListCategory = ({
       return;
     }
 
-     const productsPrefiltered = products.filter(
+/*      const productsPrefiltered = products.filter(
       (product) => product.category === categorySelected
-    ); 
+    );  */
      // Product filtered by name
 
-      const productsFilter = productsPrefiltered.filter((product) =>
-        product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
-      );
-      setProductsFiltered(productsFilter);
-      setError("");
-  }, [keyWord, categorySelected]);
+     if(!isLoading){
+       const productsFilter = productsFetched.filter((product) =>
+         product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase())
+       );
+       setProductsFiltered(productsFilter);
+       setError("");
+     }
+  }, [keyWord, categorySelected, productsFetched, isLoading]);
   return (
     <View style={styles.flatListContainer}>
       <Search
