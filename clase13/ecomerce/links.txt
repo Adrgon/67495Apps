@@ -1,0 +1,3 @@
+Animations: https://reactnative.dev/docs/animations
+GetDefaultMiddleware: https://redux-toolkit.js.org/api/getDefaultMiddleware
+Mutations: https://redux-toolkit.js.org/rtk-query/usage/mutations
