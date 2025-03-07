@@ -11,21 +11,13 @@ import { usePostOrderMutation } from "../services/shopService";
 const Cart = () => {
 const {items: CartData, total} = useSelector((state)=> state.cart.value)
 const [triggerPostOrder, result] = usePostOrderMutation()
-/*   const total = CartData.reduce(
-    (acumulador, currentItem) =>
-      (acumulador += currentItem.price * currentItem.quantity),
-    0
-  );
-
-  let total2 = 0;
-  for (const currentItem of CartData) {
-    console.log(currentItem.id);
-    total2 += currentItem.price * currentItem.quantity;
-  } */
 
   onConfirmOrder = () => {
     triggerPostOrder({items: CartData, user: "Luka", total})
+
   }
+
+
   console.log(result)
 
   return (
@@ -41,7 +33,9 @@ const [triggerPostOrder, result] = usePostOrderMutation()
         <Pressable onPress={onConfirmOrder}>
           <Text>Confirm</Text>
         </Pressable>
-        <Text>Total: ${total}</Text>
+        <View>
+          <Text>Total: ${total}</Text>
+        </View>
       </View>
     </View>
   );
@@ -56,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 120,
   },
   totalContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },

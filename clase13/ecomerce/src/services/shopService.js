@@ -31,6 +31,13 @@ export const shopApi = createApi({
         method: 'POST',
         body: order
       })
+    }),
+    updateStock: builder.mutation({
+      query: ({...order}) => ({
+        url: 'products.json',
+        method: 'PATCH',
+        body: order
+      })
     })
   }),
 });
@@ -39,5 +46,6 @@ export const {
   useGetCategoriesQuery, 
   useGetProductsByCategoryQuery, 
   useGetProductByIdQuery,
-  usePostOrderMutation
+  usePostOrderMutation,
+  useUpdateStockMutation
 } = shopApi
