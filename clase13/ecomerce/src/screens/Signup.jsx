@@ -1,8 +1,14 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import InputForm from '../components/InputForm'
 import SubmitButton from '../components/SubmitButton'
- import { colors } from "../global/color";
+import { colors } from "../global/color";
+
+ import { useDispatch } from 'react-redux';
+import { useSignUpMutation } from '../services/authService';
+import { setUser } from '../features/user/UserSlice';
+
+
 
 const Signup = ({navigation}) => {
     const [email, setEmail] = useState('')
@@ -12,8 +18,44 @@ const Signup = ({navigation}) => {
     const [errorPassword, setErrorPassword] = useState('')
     const [errorConfirmPassword, setErrorConfirmPassword] = useState('')
   
+    const dispatch = useDispatch();
+
+    const [triggerSignUp, result] = useSignUpMutation()
+
+    useEffect(() => {
+        if(result.isSuccess) {
+            dispatch( setUser({
+                email: result.data.email,
+                token: result.data.idToken
+            })
+        )}
+    }, [result])
+
+    
   
-    const onSubmit = () => {}
+    const onSubmit = () => {
+        try {
+            setErrorMail('')
+            setErrorPassword('')
+            setErrorConfirmPassword('')
+            triggerSignUp({email, password, returnSecureToken: true})
+        }catch (err) {
+            console.log(err);
+            console.log(err.path)
+            console.log(err.message)
+            switch(error.path) {
+                case 'email':
+                    setErrorMail(error.message)
+                    break;
+                case 'password':
+                    setErrorPassword(error.message)
+                    break;
+                case 'confirmPassword':
+                    setErrorConfirmPassword(error.message)
+                    break;
+            }
+        }
+    }
 
     return (
       <View style={styles.main}>

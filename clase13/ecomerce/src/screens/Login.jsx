@@ -1,35 +1,57 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { colors } from "../global/color";
 
 import InputForm from '../components/InputForm'
 import SubmitButton from '../components/SubmitButton'
 
+import { useDispatch } from 'react-redux';
+import { useSignInMutation } from '../services/authService';
+import { setUser } from '../features/user/UserSlice';
+
 const Login = ({navigation}) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
-    onSubmit = () => {}
+    const dispatch = useDispatch();
+    const [triggerSignIn, result] = useSignInMutation()
 
-  return (
-    <View style={styles.main}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Login to start</Text>
-        <InputForm label={"email"} onChange={setEmail} error={""} />
-        <InputForm
-          label={"password"}
-          onChange={setPassword}
-          error={""}
-          isSecure={true}
-        />
-        <SubmitButton onPress={onSubmit} title="Send" />
-        <Text style={styles.sub}>Not have an account?</Text>
-        <Pressable onPress={() => navigation.navigate("Signup")}>
-          <Text style={styles.subLink}>Sign up</Text>
-        </Pressable>
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    useEffect(()=> {
+        if(result.isSuccess){
+          dispatch(
+            setUser({
+              email: result.data.email,
+              token: result.data.idToken,
+            })
+          )
+        }
+    }, [result])
+
+
+    const onSubmit = () => {
+    triggerSignIn({ email, password });
+    };
+
+    return (
+      <View style={styles.main}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Login to start</Text>
+          <InputForm label={"email"} onChange={setEmail} error={""} />
+          <InputForm
+            label={"password"}
+            onChange={setPassword}
+            error={""}
+            isSecure={true}
+          />
+          <SubmitButton onPress={onSubmit} title="Send" />
+          <Text style={styles.sub}>Not have an account?</Text>
+          <Pressable onPress={() => navigation.navigate("Signup")}>
+            <Text style={styles.subLink}>Sign up</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
-  );
+    );
 }
 
 export default Login

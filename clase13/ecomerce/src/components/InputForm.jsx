@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     width: "90%",
     fontSize: 16,
     fontFamily: "Josefin",
+    color: colors.secondary,
   },
   error: {
     paddintTop: 2,
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: 3,
     borderBottomColor: colors.primary,
+    color: 'white',
     padding: 2,
     fontFamily: "Josefin",
     fontSize: 14,
