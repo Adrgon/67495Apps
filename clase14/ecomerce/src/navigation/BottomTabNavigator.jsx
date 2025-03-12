@@ -8,13 +8,11 @@ import { colors } from '../global/color';
 import HomeStackNavigator from './HomeStackNavigator';
 import CartStackNavigator from './CartStackNavigator'
 import OrderStackNavigator from './OrderStackNavigator'
+import MyProfileStackNavigator from './MyProfileStackNavigator';
 
-import CartTemp from '../screens/CartTemp'
-import OrderTemp from '../screens/OrdersTemp'
 
 const Tab = createBottomTabNavigator();
 import Header from '../components/Header'
-import MyProfileStackNavigator from './MyProfileStackNavigator';
 
 const BottomTabNavigator = () => {
   return (
@@ -53,7 +51,7 @@ const BottomTabNavigator = () => {
             return (
               <View>
                 <FontAwesome6
-                  name="cart-shopping"
+                  name="cart-circle"
                   size={24}
                   color={focused ? "black" : colors.tertiary}
                 />
@@ -81,6 +79,23 @@ const BottomTabNavigator = () => {
         }}
       />
       {/* Agregar el tab para el perfil */}
+      <Tab.Screen 
+        name="My Profile"
+        component={MyProfileStackNavigator}
+        options={{
+          tabBarIcon: ({focused})=> {
+            return (
+              <View>
+                <Ionicons
+                  name="person-circle"
+                  size={24}
+                  color={focused ? "black" : colors.tertiary}
+                />
+              </View>
+            );
+          }
+        }}
+      />
     </Tab.Navigator>
   );
 }

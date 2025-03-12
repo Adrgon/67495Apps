@@ -40,8 +40,21 @@ export const shopApi = createApi({
       }),
     }),
     //Obtener imagen desde la base de datos
-
+    getProfileImage: builder.query({
+      query: (localId) => `profileImages/${localId}.json`,
+      providesTags: ["profileImageGet"],
+    }),
     // Guardar imagen en la base de datos.
+    postProfileImage: builder.mutation({
+      query: ({ image, localId }) => ({
+        url: `profileImages/${localId}.json`,
+        method: "PUT",
+        body: {
+          image: image,
+        },
+      }),
+      invalidatesTags: ["profileImageGet"],
+    }),
   }),
 });
 
