@@ -1,13 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
+
 import AddButton from "../components/AddButton";
 import { useGetLocationQuery } from "../services/shopService";
+
 import AddressItem from "../components/AddressItem";
 
 const ListAddress = ({ navigation }) => {
   // logica 
-  const location = null
+  const {localId} = useSelector( (state)=> state.auth.value)
+
+  const {data: location, isLoading, error} = useGetLocationQuery(localId)
+
+  //console.log(location);
 
   return location ? (
     <AddressItem location={location} navigation={navigation} />

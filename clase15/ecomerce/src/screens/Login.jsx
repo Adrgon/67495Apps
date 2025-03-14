@@ -23,6 +23,7 @@ const Login = ({navigation}) => {
             setUser({
               email: result.data.email,
               token: result.data.idToken,
+              localId: result.data.localId
             })
           )
         }

@@ -55,6 +55,25 @@ export const shopApi = createApi({
       }),
       invalidatesTags: ["profileImageGet"],
     }),
+    //Obtener direccion desde la base de datos
+    getLocation: builder.query({
+      query: (localId) => `locations/${localId}.json`,
+      providesTags: ["locationGet"],
+    }),
+    // Guardar imagen en la base de datos.
+    postLocation: builder.mutation({
+      query: ({ location, localId }) => ({
+        url: `locations/${localId}.json`,
+        method: "PUT",
+        body: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          address: location.address,
+          updatedAt: location.updatedAt
+        },
+      }),
+      invalidatesTags: ["locationGet"],
+    }),
   }),
 });
 
@@ -65,5 +84,7 @@ export const {
   usePostOrderMutation,
   useUpdateStockMutation, 
   useGetProfileImageQuery,
-  usePostProfileImageMutation
+  usePostProfileImageMutation, 
+  useGetLocationQuery,
+  usePostLocationMutation
 } = shopApi

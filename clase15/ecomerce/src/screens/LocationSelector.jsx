@@ -5,38 +5,79 @@ import * as Location from "expo-location";
 import AddButton from "../components/AddButton";
 
 import MapPreview from "../components/MapPreview";
-import { googleMapsApiKey } from "../databases/googleMaps";
+
 import { colors } from "../global/color";
-import {
-  useGetLocationQuery,
-  usePostLocationMutation,
-} from "../services/shopService";
+
+import {googleMapsApiKey} from "../databases/googleMaps"
+import { usePostLocationMutation } from "../services/shopService";
 import { useSelector } from "react-redux";
 
 const LocationSelector = ({ navigation }) => {
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
-  //const [triggerPostUserLocation, result] = usePostLocationMutation();
-  //const { localId } = useSelector((state) => state.auth.value); 
 
-
+  const [triggerPostUserLocation, result] = usePostLocationMutation()
+  const {localId} = useSelector((state) => state.auth.value)
+  
   const onConfirmAddress = () => {
-
+    const date = new Date()
+    triggerPostUserLocation({
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude,
+        address: address,
+        updatedAt: date
+      },
+      localId: localId
+    });
   };
 
+  useEffect(() => {
+    //IIFE Function
+    (async () => {
+      try {
+
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        console.log(status)
+        if (status === "granted") {
+          let location = await Location.getCurrentPositionAsync({});
+          console.log(location);
+          setLocation({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  useEffect(()=>{
+    (async ()=>{
+      try{
+        const url_reverse_geocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${googleMapsApiKey}`;
+        const response = await fetch(url_reverse_geocode);
+        const data = await response.json();
+        console.dir(data)
+        setAddress(data.results[0].formatted_address);
+      }catch(err){
+        console.log(err)
+      }
+    })()
+  }, [location])
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>My Address</Text>
-      {/* Flatlist con las directions */}
-      {location ? (
+       {location ? (
         <>
           <Text style={styles.text}>
             Lat: {location.latitude}, long: {location.longitude}.
           </Text>
-          <MapPreview location={location} />
+          <MapPreview location={location} /> 
           <Text style={styles.address}>Formatted address: {address}</Text>
           <AddButton onPress={onConfirmAddress} title="Confirm address" />
         </>
