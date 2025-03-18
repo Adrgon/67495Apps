@@ -10,6 +10,51 @@ const estiloTexto = {
 */
   return (
     <View style={styles.container}>
+      <Button
+        title="Press me"
+        onPress={() => Alert.alert("Simple Button pressed")}
+      />
+
+      <Button
+        title="Press me"
+        color="#f194ff"
+        onPress={() => Alert.alert("Button with adjusted color pressed")}
+      />
+
+      <Button
+        title="Press me"
+        disabled
+        onPress={() => Alert.alert("Cannot press this one")}
+      />
+
+      <View style={styles.fixToText}>
+        <Button
+          title="Left button"
+          onPress={() => Alert.alert("Left button pressed")}
+        />
+        <Button
+          title="Right button"
+          onPress={() => Alert.alert("Right button pressed")}
+        />
+      </View>
+
+      <Image
+        style={styles.tinyLogo}
+        source={require("./assets/react-native.png")}
+      />
+      <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: "https://reactnative.dev/img/tiny_logo.png",
+        }}
+      />
+      <Image
+        style={styles.logo}
+        source={{
+          uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==",
+        }}
+      />
+
       <View style={styles.inputContainer}>
         <TextInput style={styles.input} />
         <Button title="Agregar" color="#5555ff" />
