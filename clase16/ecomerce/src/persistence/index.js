@@ -1,11 +1,9 @@
-import * as SQLite from "expo-sqlite";
-export const useDB = () => {
   const openDatabase = async () => {
     const db = await SQLite.openDatabaseSync("sessions.db")
     return db;
   };
 
-  const initDB = async () => {
+  export const initDB = async () => {
     const db = await openDatabase();
     console.log(db)
     const sql = `CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);`;
@@ -14,7 +12,7 @@ export const useDB = () => {
     return res;
   };
 
-  const insertSession = async ({ email, localId, token }) => {
+  export const insertSession = async ({ email, localId, token }) => {
     const db = await openDatabase();
     const sql = `INSERT INTO sessions (localId, email, token) VALUES (?, ?, ?);`;
     const args = [localId, email, token];
@@ -23,7 +21,7 @@ export const useDB = () => {
     return res;
   };
 
-  const getSession = async () => {
+  export const getSession = async () => {
     const db = await  openDatabase();
     const sql = `SELECT * FROM sessions`
     const firstRow = await db.getFirstAsync(sql);
@@ -31,7 +29,7 @@ export const useDB = () => {
     return firstRow;
   };
 
-  const truncateSessionTable = async () => {
+  export const truncateSessionTable = async () => {
     const db = await openDatabase()
     const sql = `DELETE FROM sessions`;
     const args = [];
@@ -39,11 +37,3 @@ export const useDB = () => {
     console.log(res)
     return res;
   };
-
-  return {
-    initDB,
-    insertSession,
-    getSession,
-    truncateSessionTable,
-  };
-};

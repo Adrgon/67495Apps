@@ -6,20 +6,26 @@ import { Provider } from 'react-redux';
 import store from './src/store'
 import { colors } from './src/global/color';
 
+import { useDB } from './src/hooks/useDB';
 
+//import { initDB } from './src/persistence';
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     Josefin: require("./assets/JosefinSans-Regular.ttf"),
-  })
+  });
+  // inicializar base de session
+  const { initDB } = useDB();
 
-// inicializar base de session
- 
-  if(!fontsLoaded || fontError) {
+  useEffect(() => {
+    initDB();
+  }, []);
+
+  if (!fontsLoaded || fontError) {
     return null;
   }
 
-  if(fontsLoaded && !fontError) {
+  if (fontsLoaded && !fontError) {
     return (
       <SafeAreaView style={styles.container}>
         <Provider store={store}>
