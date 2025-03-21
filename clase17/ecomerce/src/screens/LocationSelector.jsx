@@ -8,6 +8,7 @@ import MapPreview from "../components/MapPreview";
 
 import { colors } from "../global/color";
 
+
 import {googleMapsApiKey} from "../databases/googleMaps"
 import { usePostLocationMutation } from "../services/shopService";
 import { useSelector } from "react-redux";
@@ -20,18 +21,6 @@ const LocationSelector = ({ navigation }) => {
   const [triggerPostUserLocation, result] = usePostLocationMutation()
   const {localId} = useSelector((state) => state.auth.value)
   
-  const onConfirmAddress = () => {
-    const date = new Date()
-    triggerPostUserLocation({
-      location: {
-        latitude: location.latitude,
-        longitude: location.longitude,
-        address: address,
-        updatedAt: date
-      },
-      localId: localId
-    });
-  };
 
   useEffect(() => {
     //IIFE Function
@@ -40,6 +29,10 @@ const LocationSelector = ({ navigation }) => {
 
         let { status } = await Location.requestForegroundPermissionsAsync();
         console.log(status)
+        if(status !== "granted"){
+          setError("Permission to acces location was denied")
+        }
+
         if (status === "granted") {
           let location = await Location.getCurrentPositionAsync({});
           console.log(location);
@@ -68,6 +61,18 @@ const LocationSelector = ({ navigation }) => {
     })()
   }, [location])
 
+  const onConfirmAddress = () => {
+    const date = new Date();
+    triggerPostUserLocation({
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude,
+        address: address,
+        updatedAt: date,
+      },
+      localId: localId,
+    });
+  };
 
   return (
     <View style={styles.container}>

@@ -14,56 +14,57 @@ const ImageSelector = ({navigation}) => {
 
   const [image, setImage] = useState(null)
   const [isImageFromCamera, setIsImageFromCamera] = useState(false);
-  const [imageURI, setImageURI] = useState("");
-  
+  const [imageUri, setImageUri] = useState("")
+
   const {localId} = useSelector(state => state.auth.value)
-  console.log(localId)
   const {data: imageFromBase} = useGetProfileImageQuery(localId)
   
   const [triggerPostImage, result] = usePostProfileImageMutation()
-  
-
   const dispatch = useDispatch()
 
    const vefifyCameraPermissions = async () => {
+     // verificar permisos de camara
      const { granted } = await ImagePicker.requestCameraPermissionsAsync()
      return granted
    }
 
-    const verifyGalleryPermissions = async () => {
-      const { granted } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      return granted;
-    };
+    const vefifyGalleryPermissions = async () => {
+        // verificar permisos de galeria
+        const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        return granted;
+      };
 
-       const pickLibraryImage = async () => {
-         try {
-           setIsImageFromCamera(false);
-           const permissionGallery = await verifyGalleryPermissions();
-           if (permissionGallery) {
-             const result = await ImagePicker.launchImageLibraryAsync({
-               base64: true,
-               allowsEditing: true,
-               aspect: [1, 1],
-               mediaTypes: (ImagePicker.MediaType = ["images"]),
-               quality: 0.2,
-             });
+   const pickLibraryImage = async () => {
 
-             console.log(result);
+    try {
+      setIsImageFromCamera(false)
+      const permisssionGallery = await vefifyGalleryPermissions();
+      if(permisssionGallery){
+        const result = await ImagePicker.launchImageLibraryAsync({
+          base64: true,
+          allowsEditing: true,
+          aspect: [1, 1],
+          mediaTypes: (ImagePicker.MediaType = ["images"]),
+          quality: 0.2,
+        });
 
-             if (!result.canceled) {
-               const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
-               setImage(image);
-             }
-           }
-         } catch (error) {
-           console.log(error);
-         }
-       };
+        console.log(result)
+
+        if(!result.canceled){
+          const image = `data:image/jpeg;base64,${result.assets[0].base64}`
+          setImage(image);
+        }
+      }
+    }catch(err){
+      console.log(err)
+    }
+   }
+
 
 
    const pickImage = async () => {
      // seleccionar una imagen
+        setIsImageFromCamera(true);
      try {
       const permissionCamera = await vefifyCameraPermissions()
       if(permissionCamera){
@@ -78,6 +79,7 @@ const ImageSelector = ({navigation}) => {
         console.log(result)
 
         if(!result.canceled) {
+          setImageUri(result.assets[0].uri)
           const img = `data:image/jpg;base64,${result.assets[0].base64}`
           setImage(img)
         }
@@ -92,10 +94,9 @@ const ImageSelector = ({navigation}) => {
      try {
       dispatch(setCameraImage(image))
       triggerPostImage({image, localId})
-       
-      if(setIsImageFromCamera) {
-        const result = await ExpoLibrary.createAssetAsync(imageURI)
-      } 
+      if(isImageFromCamera){
+        const result = await ExpoLibrary.createAssetAsync(imageUri)
+      }
 
       navigation.goBack()
      } catch(err) {
@@ -103,18 +104,17 @@ const ImageSelector = ({navigation}) => {
      }
 
    }
+
+   console.log({image})
   
   
   return (
     <View style={styles.container}>
       {image || imageFromBase ? (
         <>
-          <Image source={{ uri: image }} style={styles.image} />
+          <Image source={{ uri: image || imageFromBase }} style={styles.image} />
           <AddButton title="Take another photo" onPress={pickImage} />
-          <AddButton
-            title="Pick photo from gallery"
-            onPress={pickLibraryImage}
-          />
+          <AddButton title="Pick photo from gallery" onPress={pickLibraryImage} />
           <AddButton title="Confirm photo" onPress={confirmImage} />
         </>
       ) : (
@@ -125,11 +125,6 @@ const ImageSelector = ({navigation}) => {
           <AddButton title="Take a phhoto" onPress={pickImage} />
         </>
       )}
-      {/*       
-    Imagen cargada
-
-    Sin Imagen 
-*/}
     </View>
   );
 }

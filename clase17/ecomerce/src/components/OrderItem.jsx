@@ -12,8 +12,8 @@ const OrderItem = ({ order }) => {
   return (
     <View style={styles.card} onPress={() => {}}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>
-          {new Date(order.createdAt).toLocaleString()}
+        <Text style={styles.text}> Orden - 
+          {new Date().toLocaleString()}
         </Text>
         <Text style={styles.text2}>${total}</Text>
       </View>

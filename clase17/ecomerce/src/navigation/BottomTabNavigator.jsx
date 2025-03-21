@@ -50,8 +50,8 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <View>
-                <FontAwesome6
-                  name="cart-shopping"
+                <FontAwesome5
+                  name="shopping-cart"
                   size={24}
                   color={focused ? "black" : colors.tertiary}
                 />

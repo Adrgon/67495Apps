@@ -1,8 +1,11 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { baseUrl } from '../databases/realTimeDataBase'
+//import { baseUrl } from '../databases/realTimeDataBase'
+
+
 export const shopApi = createApi({
   reducerPath: "shopApi",
-  baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.EXPO_PUBLIC_API_URL }),
+  tagTypes: ["profileImageGet", "locationGet"],
   endpoints: (builder) => ({
     getCategories: builder.query({
       query: () => `categories.json`,
@@ -11,9 +14,7 @@ export const shopApi = createApi({
       query: (category) =>
         `products.json?orderBy="category"&equalTo="${category}"`,
       transformResponse: (response) => {
-        //console.log(response);
         const responseTransformed = Object.values(response);
-        //console.log(responseTransformed);
         return responseTransformed;
       },
     }),
@@ -31,6 +32,9 @@ export const shopApi = createApi({
         method: "POST",
         body: order,
       }),
+    }),
+    getOrders: builder.query({
+      query: () => `orders.json`,
     }),
     updateStock: builder.mutation({
       query: ({ ...order }) => ({
@@ -69,7 +73,7 @@ export const shopApi = createApi({
           latitude: location.latitude,
           longitude: location.longitude,
           address: location.address,
-          updatedAt: location.updatedAt
+          updatedAt: location.updatedAt,
         },
       }),
       invalidatesTags: ["locationGet"],
@@ -82,6 +86,7 @@ export const {
   useGetProductsByCategoryQuery, 
   useGetProductByIdQuery,
   usePostOrderMutation,
+  useGetOrdersQuery,
   useUpdateStockMutation, 
   useGetProfileImageQuery,
   usePostProfileImageMutation, 

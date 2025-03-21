@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Platform } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { colors } from "../global/color";
 
@@ -7,7 +7,9 @@ import SubmitButton from '../components/SubmitButton'
 
 import { useDispatch } from 'react-redux';
 import { useSignInMutation } from '../services/authService';
-import { setUser } from '../features/user/UserSlice';
+
+import { setUser } from "../features/user/UserSlice";
+import { useDB } from '../hooks/useDB';
 
 const Login = ({navigation}) => {
 
@@ -17,21 +19,37 @@ const Login = ({navigation}) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    useEffect(()=> {
-        if(result.isSuccess){
-          dispatch(
-            setUser({
-              email: result.data.email,
-              token: result.data.idToken,
-              localId: result.data.localId
-            })
-          )
+    const {insertSession} = useDB();
+
+ useEffect(() => {
+   if (result.isSuccess) {
+    (async () => {
+      try {
+        if(Platform.OS !== 'web'){
+        insertSession({
+          email: result.data.email,
+          localId: result.data.localId,
+          token: result.data.idToken,
+        });
         }
-    }, [result])
+        dispatch(
+          setUser({
+            email: result.data.email,
+            idToken: result.data.idToken,
+            localId: result.data.localId,
+          })
+        );
+      } catch(err) {
+        console.log(err)
+      }
+    })()
+   }
+ }, [result]);
 
 
     const onSubmit = () => {
-    triggerSignIn({ email, password });
+      triggerSignIn({ email, password });
+      console.log("login")
     };
 
     return (
@@ -69,7 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.primary,
+    backgroundColor: colors.base,
     gap: 15,
     paddingVertical: 20,
     borderRadius: 10,
@@ -77,13 +95,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: "Josefin",
+    color: colors.tertiary
   },
   sub: {
     fontSize: 14,
-    color: "black",
+    color: colors.tertiary,
   },
   subLink: {
     fontSize: 14,
-    color: "blue",
+    color: colors.secondary,
   },
 });

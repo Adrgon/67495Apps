@@ -3,22 +3,22 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, Text, View, TextInput, StyleSheet, ScrollView } from 'react-native';
 
 const productsExample = [
-  { id: 1, value: "Tomate" },
-  { id: 2, value: "Peras" },
-  { id: 3, value: "Pan" },
-  { id: 4, value: "Pan" },
-  { id: 5, value: "Pan" },
-  { id: 6, value: "Pan" },
-  { id: 7, value: "Pan" },
-  { id: 8, value: "Pan" },
-  { id: 9, value: "Pan" },
-  { id: 10, value: "Pan" },
-  { id: 11, value: "Pan" },
-  { id: 12, value: "Pan" },
-  { id: 13, value: "Pan" },
-  { id: 14, value: "Pan" },
-  { id: 15, value: "Pan" },
-  { id: 16, value: "Pan" },
+  { id: 1, value: "Mate" },
+  { id: 2, value: "Cafe" },
+  { id: 3, value: "Harina" },
+  { id: 4, value: "Palmitos" },
+  { id: 5, value: "Yerba" },
+  { id: 6, value: "Mermelada" },
+  { id: 7, value: "Cacao" },
+  { id: 8, value: "Picadillo" },
+  { id: 9, value: "Pate" },
+  { id: 10, value: "Caballa" },
+  { id: 11, value: "Arroz" },
+  { id: 12, value: "Arvejas" },
+  { id: 13, value: "Sadinas" },
+  { id: 14, value: "Atun" },
+  { id: 15, value: "Choclo" },
+  { id: 16, value: "Lentejas" },
 ];
 
 export default function App() {

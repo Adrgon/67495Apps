@@ -7,6 +7,7 @@ import { colors } from "../global/color";
  import { useDispatch } from 'react-redux';
 import { useSignUpMutation } from '../services/authService';
 import { setUser } from '../features/user/UserSlice';
+import { signupSchema } from '../validations/signupSchema';
 
 
 
@@ -38,11 +39,14 @@ const Signup = ({navigation}) => {
             setErrorMail('')
             setErrorPassword('')
             setErrorConfirmPassword('')
+            signupSchema.validateSync({
+              email, password, confirmPassword
+            })
             triggerSignUp({email, password, returnSecureToken: true})
-        }catch (err) {
-            console.log(err);
-            console.log(err.path)
-            console.log(err.message)
+        }catch (error) {
+            //console.log(error);
+            //console.log(error.path)
+            //console.log(error.message)
             switch(error.path) {
                 case 'email':
                     setErrorMail(error.message)
@@ -61,7 +65,11 @@ const Signup = ({navigation}) => {
       <View style={styles.main}>
         <View style={styles.container}>
           <Text style={styles.title}>Signup</Text>
-          <InputForm label={"email"} onChange={setEmail} error={errorMail} />
+          <InputForm 
+            label={"email"} 
+            onChange={setEmail} 
+            error={errorMail} 
+          />
           <InputForm
             label={"password"}
             onChange={setPassword}
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.primary,
+    backgroundColor: colors.base,
     gap: 15,
     paddingVertical: 20,
     borderRadius: 10,
@@ -106,15 +114,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontFamily: "Josefin",
+    color: colors.tertiary,
   },
   sub: {
     fontSize: 14,
     fontFamily: "Josefin",
-    color: "black",
+    color: colors.tertiary,
   },
   subLink: {
     fontSize: 14,
     fontFamily: "Josefin",
-    color: "blue",
+    color: colors.secondary,
   },
 });
